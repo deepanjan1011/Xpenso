@@ -1,4 +1,4 @@
-# 🐾  Personal Finance Manager - Take Control of Your Finances! 🐾
+# 🐾  AI Powered Personal Finance Manager - Take Control of Your Finances! 🐾
 
 
 
