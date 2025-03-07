@@ -1,10 +1,12 @@
 # 🐾  Personal Finance Manager - Take Control of Your Finances! 🐾
 
-![Cute Cat with Calculator](https://placecats.com/millie/300/150)
+
 
 ##  👋 Welcome!
 
 This project is a web application designed to simplify your personal finance management.  If you're tired of messy receipts and struggling to keep track of your budget, you've come to the right place!  I built this tool to make managing your finances easier and more intuitive.
+
+![Cute Cat with Calculator](https://placecats.com/millie/300/150)
 
 ## ✨ Key Features
 
