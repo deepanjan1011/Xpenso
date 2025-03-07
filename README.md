@@ -76,4 +76,4 @@ Ready to run this project yourself? Here's a quick guide:
 
     *   Visit `http://localhost:3000` in your web browser to see the application running.
 
-Made with ❤️ by Deepanjan Pati
+                                 Made with ❤️ by Deepanjan Pati
