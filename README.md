@@ -1,6 +1,6 @@
 # 🐾  Personal Finance Manager - Take Control of Your Finances! 🐾
 
-![Cute Cat with Calculator](https://picsum.photos/400/300)
+![Cute Cat with Calculator](https://placecats.com/millie/300/150)
 
 ##  👋 Welcome!
 
