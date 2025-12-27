@@ -3,6 +3,8 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
 
+import { SessionProvider } from "@/components/session-provider";
+
 const inter = Inter({ subsets: ["latin"] });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
@@ -17,7 +19,9 @@ export default function RootLayout({ children }) {
       <html lang="en">
         <body
           className={`${inter.className} ${outfit.variable}`}>
-          {children}
+          <SessionProvider>
+            {children}
+          </SessionProvider>
           <Toaster richColors />
         </body>
       </html>
