@@ -286,7 +286,7 @@ const AddTransactionForm = ({ accounts, categories, editMode = false, initialDat
           )}
         </div>
       )}
-      <div className='flex-gap-4'>
+      <div className="flex flex-col gap-4">
         <Button
           type="button"
           variant="outline"

@@ -80,6 +80,7 @@ const DashboardClient = ({ accounts, transactions, budgetData, defaultAccount })
                     >
                         Personal
                     </button>
+                    <div className="w-px h-6 bg-zinc-200 mx-1" />
                     <button
                         onClick={() => setActiveTab("business")}
                         className={`relative px-8 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 flex items-center gap-2 ${activeTab === "business"
