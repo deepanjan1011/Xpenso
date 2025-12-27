@@ -36,9 +36,10 @@ const DashboardClient = ({ accounts, transactions, budgetData, defaultAccount })
             {/* Context Switcher */}
             <div className="flex justify-center">
                 <Tabs defaultValue="personal" onValueChange={setActiveTab} className="w-[400px]">
-                    <TabsList className="grid w-full grid-cols-2">
+                    <TabsList className="grid w-full grid-cols-3">
                         <TabsTrigger value="personal">Personal</TabsTrigger>
                         <TabsTrigger value="business">Business</TabsTrigger>
+                        <TabsTrigger value="all">All</TabsTrigger>
                     </TabsList>
                 </Tabs>
             </div>

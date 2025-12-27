@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
 
 const COLORS = [
   "#FF6B6B",
@@ -32,13 +33,12 @@ const COLORS = [
   "#9FA8DA",
 ];
 const DashboardOverview = ({ accounts, transactions }) => {
-  const [selectedAccountId, setSelectedAccountId] = useState(
-    accounts.find((a) => a.isDefault)?.id || accounts[0]?.id
-  );
-  const accountTransactions = transactions.filter(
-    (t) => t.accountId === selectedAccountId
-  );
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  const accountTransactions = transactions;
+
   const recentTransactions = accountTransactions
+    .filter((t) => !selectedCategory || t.category === selectedCategory)
     .sort((a, b) => new Date(b.date) - new Date(a.date))
     .slice(0, 5);
 
@@ -66,29 +66,24 @@ const DashboardOverview = ({ accounts, transactions }) => {
       value: amount,
     })
   );
+  const totalCurrentMonthExpenses = currentMonthExpenses.reduce(
+    (acc, transaction) => acc + transaction.amount,
+    0
+  );
+
   return (
     <div className="grid gap-4 md:grid-cols-2">
-      {/* Recent Transactions Card */}
+      {/* ... (Recent Transactions Card kept same) ... */}
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
           <CardTitle className="text-base font-normal">
             Recent Transactions
           </CardTitle>
-          <Select
-            value={selectedAccountId}
-            onValueChange={setSelectedAccountId}
-          >
-            <SelectTrigger className="w-[140px]">
-              <SelectValue placeholder="Select account" />
-            </SelectTrigger>
-            <SelectContent>
-              {accounts.map((account) => (
-                <SelectItem key={account.id} value={account.id}>
-                  {account.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          {selectedCategory && (
+            <Badge variant="outline" className="cursor-pointer" onClick={() => setSelectedCategory(null)}>
+              Filter: {selectedCategory} <span className="ml-1 text-xs">x</span>
+            </Badge>
+          )}
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
@@ -111,6 +106,19 @@ const DashboardOverview = ({ accounts, transactions }) => {
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
+                    {transaction.account && (
+                      <Badge
+                        variant="outline"
+                        className={cn(
+                          "text-xs font-medium",
+                          transaction.account.isBusiness
+                            ? "bg-purple-100 text-purple-700 border-purple-200"
+                            : "bg-green-100 text-green-700 border-green-200"
+                        )}
+                      >
+                        {transaction.account.isBusiness ? "Business" : "Personal"}
+                      </Badge>
+                    )}
                     <div
                       className={cn(
                         "flex items-center",
@@ -150,19 +158,31 @@ const DashboardOverview = ({ accounts, transactions }) => {
             <div className="h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
+                  <text
+                    x="50%"
+                    y="50%"
+                    textAnchor="middle"
+                    dominantBaseline="middle"
+                  >
+                    Total: ₹{totalCurrentMonthExpenses.toFixed(2)}
+                  </text>
                   <Pie
                     data={pieChartData}
                     cx="50%"
                     cy="50%"
+                    innerRadius={60}
                     outerRadius={80}
                     fill="#8884d8"
                     dataKey="value"
                     label={({ name, value }) => `${name}: ₹${value.toFixed(2)}`}
+                    onClick={(data) => setSelectedCategory(selectedCategory === data.name ? null : data.name)}
+                    className="cursor-pointer"
                   >
                     {pieChartData.map((entry, index) => (
                       <Cell
                         key={`cell-${index}`}
                         fill={COLORS[index % COLORS.length]}
+                        style={{ outline: 'none', opacity: selectedCategory && selectedCategory !== entry.name ? 0.3 : 1 }}
                       />
                     ))}
                   </Pie>
@@ -182,7 +202,7 @@ const DashboardOverview = ({ accounts, transactions }) => {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
 
 export default DashboardOverview
