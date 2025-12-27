@@ -8,11 +8,12 @@ const nextConfig = {
             },
         ],
     },
-    experimental:{
-        serverActions:{
+    experimental: {
+        serverActions: {
             bodySizeLimit: "5mb",
         }
     }
 };
 
 export default nextConfig;
+// Force refresh

@@ -10,21 +10,11 @@ import Logo from './logo';
 const header = async () => {
     await checkUser();
     return (
-        <div className='fixed top-0 w-full bg-white/50 backdrop-blur-md z-50 border-b border-gray-200 supports-[backdrop-filter]:bg-white/40'>
+        <div className='fixed top-0 w-full bg-white/50 backdrop-blur-md z-[100] border-b border-gray-200 supports-[backdrop-filter]:bg-white/40'>
             <nav className='container mx-auto px-4 py-2 flex items-center justify-between'>
-                <div>
-                    <SignedIn>
-                        <Link href="/dashboard">
-                            <Logo />
-                        </Link>
-                    </SignedIn>
-
-                    <SignedOut>
-                        <Link href="/">
-                            <Logo />
-                        </Link>
-                    </SignedOut>
-                </div>
+                <a href="/">
+                    <Logo />
+                </a>
                 <div className="flex items-center space-x-4">
                     <SignedIn>
                         <Link
