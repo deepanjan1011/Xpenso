@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "email": "email dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "postinstall": "prisma generate"
+    "dev": "./node_modules/.bin/next dev --turbopack",
+    "email": "./node_modules/.bin/email dev",
+    "build": "./node_modules/.bin/next build",
+    "start": "./node_modules/.bin/next start",
+    "lint": "./node_modules/.bin/next lint",
+    "postinstall": "./node_modules/.bin/prisma generate"
   },
   "dependencies": {
     "@arcjet/next": "^1.0.0-beta.2",
@@ -34,7 +34,7 @@
     "next": "15.1.9",
     "next-themes": "^0.4.4",
     "react": "^19.0.0",
-    "react-day-picker": "^8.10.1",
+    "react-day-picker": "^9.12.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",
     "react-spinners": "^0.15.0",

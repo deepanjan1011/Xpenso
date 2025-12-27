@@ -34,26 +34,27 @@ body {
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
   }
+
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222 47% 11%;
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 217 33% 17%;
+    --accent-foreground: 210 40% 98%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 212 27% 14%;
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
@@ -66,23 +67,31 @@ body {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
 }
 
 
-@layer utilities{
-  .gradient{
-    @apply bg-gradient-to-br from-blue-600 to-purple-600
+@layer utilities {
+  .gradient {
+    @apply bg-gradient-to-r from-emerald-600 via-teal-500 to-emerald-600 animate-gradient;
   }
 
-  .gradient-title{
-    @apply gradient font-extrabold tracking-tighter pr-2 pb-2 text-transparent bg-clip-text
+  .gradient-title {
+    @apply gradient font-extrabold tracking-tight pb-2 text-transparent bg-clip-text;
   }
 }
 
-.hero-image-wrapper{
+@layer utilities {
+  .glass {
+    @apply bg-white/70 backdrop-blur-lg border-b border-white/20;
+  }
+
+}
+
+.hero-image-wrapper {
   perspective: 1000px;
 
 }
@@ -99,18 +108,20 @@ body {
 }
 
 @keyframes gradientMove {
-  0%{
+  0% {
     background-position: 0% 50%;
   }
-  50%{
+
+  50% {
     background-position: 100% 50%;
   }
-  100%{
+
+  100% {
     background-position: 0% 50%;
   }
 }
 
-.animate-gradient{
+.animate-gradient {
   background-size: 200% 200%;
   animation: gradientMove 3s ease infinite;
 }
