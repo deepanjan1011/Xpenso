@@ -13,6 +13,7 @@ import { useForm } from 'react-hook-form';
 import { CalendarIcon, Loader2 } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
+
 import useFetch from '@/hooks/use-fetch';
 import CreateAccountDrawer from '@/components/create-account-drawer';
 import { createTransaction, updateTransaction } from '@/actions/transaction';
@@ -22,6 +23,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+
 import { cn } from "@/lib/utils";
 import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
@@ -221,6 +223,9 @@ const AddTransactionForm = ({ accounts, categories, editMode = false, initialDat
                 date > new Date() || date < new Date("1900-01-01")
               }
               initialFocus
+              captionLayout="dropdown"
+              fromYear={2000}
+              toYear={new Date().getFullYear()}
             />
           </PopoverContent>
         </Popover>
@@ -228,6 +233,7 @@ const AddTransactionForm = ({ accounts, categories, editMode = false, initialDat
           <p className="text-sm text-red-500">{errors.date.message}</p>
         )}
       </div>
+
       <div className="space-y-2">
         <label className="text-sm font-medium">Description</label>
         <Input placeholder="Enter description" {...register("description")} />
