@@ -63,7 +63,16 @@ const AddTransactionForm = ({ accounts, categories, editMode = false, initialDat
           type: "EXPENSE",
           amount: "",
           description: "",
-          accountId: accounts.find((ac) => ac.isDefault)?.id,
+          accountId: (() => {
+            const context = searchParams.get("dashboardContext");
+            if (context === "personal") {
+              return accounts.find(ac => ac.isDefault && !ac.isBusiness)?.id || accounts.find(ac => ac.isDefault)?.id;
+            }
+            if (context === "business") {
+              return accounts.find(ac => ac.isDefault && ac.isBusiness)?.id || accounts.find(ac => ac.isDefault)?.id;
+            }
+            return accounts.find((ac) => ac.isDefault)?.id;
+          })(),
           date: new Date(),
           isRecurring: false,
         },

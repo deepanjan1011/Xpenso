@@ -55,7 +55,7 @@ const BudgetProgress = ({ initialBudget, currentExpenses }) => {
         <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <div className='flex-1'>
-                    <CardTitle className="text-sm font-medium"> Monthly Budget(Default Account)</CardTitle>
+                    <CardTitle className="text-sm font-medium">Personal Spending Goal</CardTitle>
                     <div className='flex items-center gap-2 mt-1'>
                         {isEditing ? (
                             <div className='flex items-center gap-2'>
@@ -77,14 +77,21 @@ const BudgetProgress = ({ initialBudget, currentExpenses }) => {
                             </div>
                         ) : (
                             <>
-                                <CardDescription>
-                                    {initialBudget
-                                        ? `₹${currentExpenses.toFixed(
-                                            2
-                                        )} of ₹${initialBudget.amount.toFixed(2)} spent`
-                                        : "No budget set"
-                                    }
-                                </CardDescription>
+                                <div className="space-y-1">
+                                    <CardDescription>
+                                        {initialBudget
+                                            ? `₹${currentExpenses.toFixed(
+                                                2
+                                            )} spent of ₹${initialBudget.amount.toFixed(2)}`
+                                            : "No budget set"
+                                        }
+                                    </CardDescription>
+                                    {initialBudget && (
+                                        <p className="text-xs text-muted-foreground">
+                                            Remaining: <span className="font-bold text-green-600">₹{(initialBudget.amount - currentExpenses).toFixed(2)}</span>
+                                        </p>
+                                    )}
+                                </div>
                                 <Button
                                     variant="ghost"
                                     size="icon"
@@ -104,10 +111,10 @@ const BudgetProgress = ({ initialBudget, currentExpenses }) => {
                         <Progress
                             value={percentUsed}
                             extraStyles={`${percentUsed >= 90
-                                    ? "bg-red-500"
-                                    : percentUsed >= 75
-                                        ? "bg-yellow-500"
-                                        : "bg-green-500"
+                                ? "bg-red-500"
+                                : percentUsed >= 75
+                                    ? "bg-yellow-500"
+                                    : "bg-green-500"
                                 }`}
                         />
                         <p className='text-xs text-muted-foreground text-right'>

@@ -20,7 +20,7 @@ import { Loader2, Wallet, PiggyBank } from 'lucide-react';
 import { toast } from 'sonner';
 
 
-const CreateAccountDrawer = ({ children }) => {
+const CreateAccountDrawer = ({ children, onAccountCreated }) => {
     const [open, setOpen] = useState(false);
 
 
@@ -59,9 +59,9 @@ const CreateAccountDrawer = ({ children }) => {
 
     useEffect(() => {
         if (newAccount && !createAccountLoading) {
-            toast.success("Account created successfully");
-            reset();
-            setOpen(false);
+            // Success handled optimally in onSubmit, but keeping for safety if needed?
+            // Actually, we want to clear the form if we haven't already.
+            // But we do it in onSubmit.
         }
     }, [createAccountLoading, newAccount]);
 
@@ -72,6 +72,24 @@ const CreateAccountDrawer = ({ children }) => {
     }, [error]);
 
     const onSubmit = async (data) => {
+        const optimisticAccount = {
+            ...data,
+            id: window.crypto.randomUUID(),
+            balance: parseFloat(data.balance),
+            userId: "temp-user", // Placeholder
+        };
+
+        // Optimistic Update
+        React.startTransition(() => {
+            if (onAccountCreated) onAccountCreated(optimisticAccount);
+        });
+
+        // Close UI immediately
+        setOpen(false);
+        reset();
+        toast.success("Account created successfully");
+
+        // Server Action
         await createAccountFn(data);
     }
 

@@ -32,7 +32,7 @@ const COLORS = [
   "#D4A5A5",
   "#9FA8DA",
 ];
-const DashboardOverview = ({ accounts, transactions }) => {
+const DashboardOverview = ({ accounts, transactions, currentTab }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   const accountTransactions = transactions;
@@ -106,7 +106,7 @@ const DashboardOverview = ({ accounts, transactions }) => {
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
-                    {transaction.account && (
+                    {transaction.account && currentTab === "all" && (
                       <Badge
                         variant="outline"
                         className={cn(
@@ -164,17 +164,27 @@ const DashboardOverview = ({ accounts, transactions }) => {
                     textAnchor="middle"
                     dominantBaseline="middle"
                   >
-                    Total: ₹{totalCurrentMonthExpenses.toFixed(2)}
+                    <tspan x="50%" dy="-0.5em" fontSize="14" fill="#888">
+                      {selectedCategory || "Total Spending"}
+                    </tspan>
+                    <tspan x="50%" dy="1.2em" fontSize="20" fontWeight="bold">
+                      ₹{
+                        (selectedCategory
+                          ? pieChartData.find((d) => d.name === selectedCategory)?.value || 0
+                          : totalCurrentMonthExpenses
+                        ).toFixed(0)
+                      }
+                    </tspan>
                   </text>
                   <Pie
                     data={pieChartData}
                     cx="50%"
                     cy="50%"
-                    innerRadius={60}
-                    outerRadius={80}
+                    innerRadius={75}
+                    outerRadius={110}
                     fill="#8884d8"
                     dataKey="value"
-                    label={({ name, value }) => `${name}: ₹${value.toFixed(2)}`}
+                    labelLine={false}
                     onClick={(data) => setSelectedCategory(selectedCategory === data.name ? null : data.name)}
                     className="cursor-pointer"
                   >
@@ -182,7 +192,7 @@ const DashboardOverview = ({ accounts, transactions }) => {
                       <Cell
                         key={`cell-${index}`}
                         fill={COLORS[index % COLORS.length]}
-                        style={{ outline: 'none', opacity: selectedCategory && selectedCategory !== entry.name ? 0.3 : 1 }}
+                        style={{ outline: "none", opacity: selectedCategory && selectedCategory !== entry.name ? 0.3 : 1 }}
                       />
                     ))}
                   </Pie>

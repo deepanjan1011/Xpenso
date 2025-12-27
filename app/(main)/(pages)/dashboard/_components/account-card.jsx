@@ -10,15 +10,17 @@ import React from 'react'
 import { toast } from 'sonner';
 
 
-const AccountCard = ({ account }) => {
+const AccountCard = ({ account, onDefaultChange }) => {
   const { name, type, balance, id, isDefault } = account;
   const [isDeleted, setIsDeleted] = React.useState(false);
+
   const {
     loading: updateDefaultLoading,
     fn: updateDefaultFn,
     data: updatedAccount,
     error,
   } = useFetch(updateDefaultAccount)
+
   const handleDefaultChange = async (event) => {
     event.preventDefault(); // Prevent navigation
 
@@ -27,6 +29,8 @@ const AccountCard = ({ account }) => {
       return; // Don't allow toggling off the default account
     }
 
+    // Optimistic Update
+    onDefaultChange(id);
     await updateDefaultFn(id);
   };
   useEffect(() => {
@@ -90,7 +94,6 @@ const AccountCard = ({ account }) => {
           <div className="flex items-center gap-2">
             <Switch checked={isDefault}
               onClick={handleDefaultChange}
-              disabled={updateDefaultLoading}
             />
             <button
               onClick={handleDelete}
