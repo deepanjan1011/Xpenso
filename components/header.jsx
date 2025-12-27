@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { LayoutDashboard, PenBox } from 'lucide-react';
 import { checkUser } from '@/lib/checkUser';
+import Logo from './logo';
 
 const header = async () => {
     await checkUser();
@@ -14,25 +15,13 @@ const header = async () => {
                 <div>
                     <SignedIn>
                         <Link href="/dashboard">
-                            <Image
-                                src={"/LogoFinal (1).png"}
-                                alt='Xpenso logo'
-                                height={60}
-                                width={200}
-                                className="h-12 w-auto object-contain"
-                            />
+                            <Logo />
                         </Link>
                     </SignedIn>
 
                     <SignedOut>
                         <Link href="/">
-                            <Image
-                                src={"/LogoFinal (1).png"}
-                                alt='Xpenso logo'
-                                height={60}
-                                width={200}
-                                className="h-12 w-auto object-contain"
-                            />
+                            <Logo />
                         </Link>
                     </SignedOut>
                 </div>
