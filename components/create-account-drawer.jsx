@@ -38,6 +38,7 @@ const CreateAccountDrawer = ({ children }) => {
             type: "GENERAL",
             balance: "",
             isDefault: false,
+            isBusiness: false,
         },
     });
     const {
@@ -100,7 +101,7 @@ const CreateAccountDrawer = ({ children }) => {
                                     <SelectValue placeholder="Select type" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="GENERAL">General</SelectItem>
+                                    <SelectItem value="CURRENT">Current</SelectItem>
                                     <SelectItem value="SAVINGS">Savings</SelectItem>
                                 </SelectContent>
                             </Select>
@@ -142,6 +143,24 @@ const CreateAccountDrawer = ({ children }) => {
                                 id="isDefault"
                                 checked={watch("isDefault")}
                                 onCheckedChange={(checked) => setValue("isDefault", checked)}
+                            />
+                        </div>
+                        <div className="flex items-center justify-between rounded-lg border p-3">
+                            <div className="space-y-0.5">
+                                <label
+                                    htmlFor="isBusiness"
+                                    className="text-base font-medium cursor-pointer"
+                                >
+                                    Business Account
+                                </label>
+                                <p className="text-sm text-muted-foreground">
+                                    Exclude from Personal Budget
+                                </p>
+                            </div>
+                            <Switch
+                                id="isBusiness"
+                                checked={watch("isBusiness")}
+                                onCheckedChange={(checked) => setValue("isBusiness", checked)}
                             />
                         </div>
                         <div className="flex gap-4 pt-4">

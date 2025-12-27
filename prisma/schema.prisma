@@ -34,6 +34,7 @@ model Account {
   type         AccountType
   balance      Decimal       @default(0) // will ask inital balance while creating an account
   isDefault    Boolean       @default(false)
+  isBusiness   Boolean       @default(false) @map("is_business")
   userId       String
   user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   transactions Transaction[]
@@ -89,7 +90,7 @@ enum TransactionType {
 }
 
 enum AccountType {
-  GENERAL
+  CURRENT
   SAVINGS
 }
 
