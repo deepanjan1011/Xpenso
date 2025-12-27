@@ -1,31 +1,8 @@
 "use client"
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
-import AbstractDashboard from "./abstract-dashboard";
 
 const HeroSection = () => {
-
-  const imageRef = useRef();
-
-  useEffect(() => {
-    const imageElement = imageRef.current;
-
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const scrollThreshold = 100;
-
-      if (scrollPosition > scrollThreshold) {
-        imageElement.classList.add("scrolled");
-      } else {
-        imageElement.classList.remove("scrolled");
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-
   return (
     <div className="pb-20 px-4">
       <div className="container mx-auto text-center">
@@ -42,12 +19,8 @@ const HeroSection = () => {
             </Button>
           </Link>
         </div>
-        <div className="hero-image-wrapper mt-5 md:mt-0 px-4">
-          <AbstractDashboard imageRef={imageRef} />
-        </div>
       </div>
     </div>
-
   )
 }
 

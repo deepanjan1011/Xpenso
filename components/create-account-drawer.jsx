@@ -20,35 +20,35 @@ import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 
 
-const CreateAccountDrawer = ({children}) => {
-    const [open,setOpen] = useState(false);
+const CreateAccountDrawer = ({ children }) => {
+    const [open, setOpen] = useState(false);
 
 
     const {
-        register, 
-        handleSubmit, 
-        formState:{errors}, 
-        setValue, 
+        register,
+        handleSubmit,
+        formState: { errors },
+        setValue,
         watch,
         reset,
     } = useForm({
         resolver: zodResolver(accountSchema),
-        defaultValues:{
+        defaultValues: {
             name: "",
-            type: "CURRENT",
+            type: "GENERAL",
             balance: "",
             isDefault: false,
         },
     });
-    const{
+    const {
         data: newAccount,
         error,
         fn: createAccountFn,
         loading: createAccountLoading,
     } = useFetch(createAccount)
-    
-    useEffect(() =>{
-        if(newAccount && !createAccountLoading){
+
+    useEffect(() => {
+        if (newAccount && !createAccountLoading) {
             toast.success("Account created successfully");
             reset();
             setOpen(false);
@@ -56,7 +56,7 @@ const CreateAccountDrawer = ({children}) => {
     }, [createAccountLoading, newAccount]);
 
     useEffect(() => {
-        if(error){
+        if (error) {
             toast.error(error.message || "Failed to create account");
         }
     }, [error]);
@@ -76,7 +76,7 @@ const CreateAccountDrawer = ({children}) => {
                     <form className='space-y-4' onSubmit={handleSubmit(onSubmit)}>
                         <div className='space-y-2'>
                             <label htmlFor='name' className='text-sm font-medium'>Account Name</label>
-                            <Input 
+                            <Input
                                 id="name"
                                 placeholder="e.g., Main Checking"
                                 {...register("name")}
@@ -90,19 +90,19 @@ const CreateAccountDrawer = ({children}) => {
                                 htmlFor="type"
                                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                             >
-                            Account Type
+                                Account Type
                             </label>
                             <Select
                                 onValueChange={(value) => setValue("type", value)}
                                 defaultValue={watch("type")}
                             >
-                            <SelectTrigger id="type">
-                                <SelectValue placeholder="Select type" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="CURRENT">Current</SelectItem>
-                                <SelectItem value="SAVINGS">Savings</SelectItem>
-                            </SelectContent>
+                                <SelectTrigger id="type">
+                                    <SelectValue placeholder="Select type" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="GENERAL">General</SelectItem>
+                                    <SelectItem value="SAVINGS">Savings</SelectItem>
+                                </SelectContent>
                             </Select>
                             {errors.type && (
                                 <p className="text-sm text-red-500">{errors.type.message}</p>
@@ -155,14 +155,14 @@ const CreateAccountDrawer = ({children}) => {
                                 className="flex-1"
                                 disabled={createAccountLoading}
                             >
-                            {createAccountLoading ? (
-                                <>
-                                    <Loader2 className='mr-2 h-4 w-4 animate-spin'/>
-                                    Creating...
-                                </>
-                            ):(
-                                "Create Account"
-                            )}
+                                {createAccountLoading ? (
+                                    <>
+                                        <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+                                        Creating...
+                                    </>
+                                ) : (
+                                    "Create Account"
+                                )}
                             </Button>
                         </div>
                     </form>

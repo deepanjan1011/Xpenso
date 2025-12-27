@@ -10,16 +10,32 @@ const header = async () => {
     await checkUser();
     return (
         <div className='fixed top-0 w-full bg-white/50 backdrop-blur-md z-50 border-b border-gray-200 supports-[backdrop-filter]:bg-white/40'>
-            <nav className='container mx-auto px-4 py-4 flex items-center justify-between'>
-                <Link href="/">
-                    <Image
-                        src={"/LogoFinal (1).png"}
-                        alt='Xpenso logo'
-                        height={100}
-                        width={250}
-                        className=" w-[250px] h-[100px] object-contain"
-                    />
-                </Link>
+            <nav className='container mx-auto px-4 py-2 flex items-center justify-between'>
+                <div>
+                    <SignedIn>
+                        <Link href="/dashboard">
+                            <Image
+                                src={"/LogoFinal (1).png"}
+                                alt='Xpenso logo'
+                                height={60}
+                                width={200}
+                                className="h-12 w-auto object-contain"
+                            />
+                        </Link>
+                    </SignedIn>
+
+                    <SignedOut>
+                        <Link href="/">
+                            <Image
+                                src={"/LogoFinal (1).png"}
+                                alt='Xpenso logo'
+                                height={60}
+                                width={200}
+                                className="h-12 w-auto object-contain"
+                            />
+                        </Link>
+                    </SignedOut>
+                </div>
                 <div className="flex items-center space-x-4">
                     <SignedIn>
                         <Link

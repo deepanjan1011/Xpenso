@@ -89,7 +89,7 @@ enum TransactionType {
 }
 
 enum AccountType {
-  CURRENT
+  GENERAL
   SAVINGS
 }
 
