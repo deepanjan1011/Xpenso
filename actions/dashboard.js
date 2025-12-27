@@ -45,14 +45,27 @@ export async function createAccount(data) {
                 data: { isDefault: false },
             });
         }
-        const account = await db.account.create({
-            data: {
-                ...data,
-                balance: balanceFloat,
-                userId: user.id,
-                isDefault: shouldBeDefault, // Override the isDefault based on our logic
-            },
-        });
+        // Use raw query to insert account to bypass Prisma Client sync issues with isBusiness
+        const { randomUUID } = await import('crypto');
+        const accountId = randomUUID();
+
+        const rawAccounts = await db.$queryRaw`
+            INSERT INTO "accounts" 
+            ("id", "name", "type", "balance", "isDefault", "is_business", "userId", "createdAt", "updatedAt")
+            VALUES (
+                ${accountId}, 
+                ${data.name}, 
+                ${data.type}::"AccountType", 
+                ${balanceFloat}, 
+                ${shouldBeDefault}, 
+                ${data.isBusiness}, 
+                ${user.id}, 
+                now(), 
+                now()
+            )
+            RETURNING *
+        `;
+        const account = rawAccounts[0];
         const serializedAccount = serializeTransaction(account);
         revalidatePath("/dashboard")
         return { success: true, data: serializedAccount }

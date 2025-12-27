@@ -36,6 +36,15 @@ export async function getCurrentBudget(accountId) {
       0
     );
 
+    // Use raw query to bypass potential Prisma Client sync issues with isBusiness field
+    const accounts = await db.$queryRaw`
+      SELECT id FROM accounts 
+      WHERE "userId" = ${user.id} 
+      AND "is_business" = false 
+      AND "type"::text = 'CURRENT'
+    `;
+    const accountIds = accounts.map((a) => a.id);
+
     const expenses = await db.transaction.aggregate({
       where: {
         userId: user.id,
@@ -44,7 +53,9 @@ export async function getCurrentBudget(accountId) {
           gte: startOfMonth,
           lte: endOfMonth,
         },
-        accountId,
+        accountId: {
+          in: accountIds,
+        },
       },
       _sum: {
         amount: true,

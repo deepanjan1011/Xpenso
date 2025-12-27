@@ -16,7 +16,7 @@ import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import useFetch from '@/hooks/use-fetch';
 import { createAccount } from '@/actions/dashboard';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Wallet, PiggyBank } from 'lucide-react';
 import { toast } from 'sonner';
 
 
@@ -35,12 +35,21 @@ const CreateAccountDrawer = ({ children }) => {
         resolver: zodResolver(accountSchema),
         defaultValues: {
             name: "",
-            type: "GENERAL",
+            type: "CURRENT",
             balance: "",
             isDefault: false,
             isBusiness: false,
         },
     });
+
+    const isBusiness = watch("isBusiness");
+
+    useEffect(() => {
+        if (isBusiness) {
+            setValue("type", "CURRENT");
+        }
+    }, [isBusiness, setValue]);
+
     const {
         data: newAccount,
         error,
@@ -101,8 +110,18 @@ const CreateAccountDrawer = ({ children }) => {
                                     <SelectValue placeholder="Select type" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="CURRENT">Current</SelectItem>
-                                    <SelectItem value="SAVINGS">Savings</SelectItem>
+                                    <SelectItem value="CURRENT">
+                                        <div className="flex items-center gap-2">
+                                            <Wallet className="h-4 w-4 text-blue-500" />
+                                            <span>Current</span>
+                                        </div>
+                                    </SelectItem>
+                                    <SelectItem value="SAVINGS">
+                                        <div className="flex items-center gap-2">
+                                            <PiggyBank className="h-4 w-4 text-pink-500" />
+                                            <span>Savings</span>
+                                        </div>
+                                    </SelectItem>
                                 </SelectContent>
                             </Select>
                             {errors.type && (
@@ -184,10 +203,10 @@ const CreateAccountDrawer = ({ children }) => {
                                 )}
                             </Button>
                         </div>
-                    </form>
-                </div>
-            </DrawerContent>
-        </Drawer>
+                    </form >
+                </div >
+            </DrawerContent >
+        </Drawer >
 
     )
 }
