@@ -14,14 +14,12 @@ async function DashboardPage() {
 
 
     return (
-        <Suspense fallback={"Loading Dashboard..."}>
-            <DashboardClient
-                accounts={accounts}
-                transactions={transactions || []}
-                budgetData={budgetData}
-                defaultAccount={defaultAccount}
-            />
-        </Suspense>
+        <DashboardClient
+            accounts={accounts}
+            transactions={transactions || []}
+            budgetData={budgetData}
+            defaultAccount={defaultAccount}
+        />
     )
 }
 

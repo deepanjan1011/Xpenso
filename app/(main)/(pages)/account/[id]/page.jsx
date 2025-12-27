@@ -4,6 +4,8 @@ import { Suspense } from 'react'
 import TransactionTable from '../_components/transaction-table';
 import { BarLoader } from 'react-spinners';
 import AccountChart from '../_components/account-chart';
+import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 
 export default async function AccountPage({ params }) {
     const { id } = await params
@@ -15,6 +17,13 @@ export default async function AccountPage({ params }) {
 
     return (
         <div className='space-y-8 px-5'>
+            <div className="flex gap-2 items-center">
+                <Link href="/dashboard" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors group">
+                    <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
+                    Back to Dashboard
+                </Link>
+            </div>
+
             <div className='flex gap-4 items-end justify-between'>
                 <div>
                     <h1 className='text-5xl sm:text-6xl font-bold tracking-tight gradient-title capitalize'>
