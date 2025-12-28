@@ -132,10 +132,10 @@ const LandingLoader = () => {
 
             <div className="intro-logo">
                 <div className="word" id="word-1">
-                    <h1><span>Xpen</span></h1>
+                    <h1><span>Xpe</span></h1>
                 </div>
                 <div className="word" id="word-2">
-                    <h1>so</h1>
+                    <h1>nso</h1>
                 </div>
             </div>
 
