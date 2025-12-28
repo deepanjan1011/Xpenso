@@ -12,9 +12,9 @@ const header = async () => {
     return (
         <div className='fixed top-0 w-full bg-white/50 backdrop-blur-md z-[100] border-b border-gray-200 supports-[backdrop-filter]:bg-white/40'>
             <nav className='container mx-auto px-4 py-2 flex items-center justify-between'>
-                <a href="/">
+                <Link href="/">
                     <Logo />
-                </a>
+                </Link>
                 <div className="flex items-center space-x-4">
                     <SignedIn>
                         <Link
@@ -26,12 +26,12 @@ const header = async () => {
                                 <span className="hidden md:inline">Dashboard</span>
                             </Button>
                         </Link>
-                        <a href="/transaction/create">
+                        <Link href="/transaction/create">
                             <Button className="flex items-center gap-2">
                                 <PenBox size={18} />
                                 <span className="hidden md:inline">Add Transaction</span>
                             </Button>
-                        </a>
+                        </Link>
                     </SignedIn>
                     <SignedOut>
                         <SignInButton forceRedirectUrl="/dashboard">

@@ -27,7 +27,7 @@ const ReciptScanner = ({ onScanComplete }) => {
             onScanComplete(scannedData);
             toast.success("Receipt scanned successfully");
         }
-    }, [scanReceiptLoading, scannedData]);
+    }, [scanReceiptLoading, scannedData, onScanComplete]);
 
     return (
         <div>

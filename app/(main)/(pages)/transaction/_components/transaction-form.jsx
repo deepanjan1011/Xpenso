@@ -106,7 +106,7 @@ const AddTransactionForm = ({ accounts, categories, editMode = false, initialDat
       reset();
       router.push(`/account/${transactionResult.data.accountId}`)
     }
-  }, [transactionResult, transactionLoading, editMode]);
+  }, [transactionResult, transactionLoading, editMode, reset, router]);
   const filteredCategories = categories.filter(
     (category) => category.type === type
   );
