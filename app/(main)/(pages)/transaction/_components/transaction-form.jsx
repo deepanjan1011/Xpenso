@@ -23,6 +23,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger, DrawerClose } from "@/components/ui/drawer";
 
 import { cn } from "@/lib/utils";
 import { Input } from '@/components/ui/input';
@@ -35,6 +36,8 @@ const AddTransactionForm = ({ accounts, categories, editMode = false, initialDat
   const router = useRouter()
   const searchParams = useSearchParams();
   const editId = searchParams.get("edit")
+  const [accountDrawerOpen, setAccountDrawerOpen] = React.useState(false);
+  const [categoryDrawerOpen, setCategoryDrawerOpen] = React.useState(false);
   const {
     register,
     handleSubmit,
@@ -150,6 +153,7 @@ const AddTransactionForm = ({ accounts, categories, editMode = false, initialDat
             type="number"
             step="0.01"
             placeholder="0.00"
+            inputMode="decimal"
             {...register("amount")}
           />
           {errors.amount && (
@@ -159,29 +163,59 @@ const AddTransactionForm = ({ accounts, categories, editMode = false, initialDat
 
         <div className="space-y-2">
           <label className="text-sm font-medium">Account</label>
-          <Select
-            onValueChange={(value) => setValue("accountId", value)}
-            defaultValue={getValues("accountId")}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select account" />
-            </SelectTrigger>
-            <SelectContent>
-              {accounts.map((account) => (
-                <SelectItem key={account.id} value={account.id}>
-                  {account.name} (₹{parseFloat(account.balance).toFixed(2)})
-                </SelectItem>
-              ))}
-              <CreateAccountDrawer>
-                <Button
-                  variant="ghost"
-                  className="relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none hover:bg-accent hover:text-accent-foreground"
-                >
-                  Create Account
+          <div className="hidden md:block">
+            <Select
+              onValueChange={(value) => setValue("accountId", value)}
+              defaultValue={getValues("accountId")}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select account" />
+              </SelectTrigger>
+              <SelectContent>
+                {accounts.map((account) => (
+                  <SelectItem key={account.id} value={account.id}>
+                    {account.name} (₹{parseFloat(account.balance).toFixed(2)})
+                  </SelectItem>
+                ))}
+                <CreateAccountDrawer>
+                  <Button
+                    variant="ghost"
+                    className="relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none hover:bg-accent hover:text-accent-foreground"
+                  >
+                    Create Account
+                  </Button>
+                </CreateAccountDrawer>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="md:hidden">
+            <Drawer open={accountDrawerOpen} onOpenChange={setAccountDrawerOpen}>
+              <DrawerTrigger asChild>
+                <Button variant="outline" className="w-full justify-start text-left font-normal" type="button">
+                  {getValues("accountId") ? accounts.find(a => a.id === getValues("accountId"))?.name : "Select account"}
                 </Button>
-              </CreateAccountDrawer>
-            </SelectContent>
-          </Select>
+              </DrawerTrigger>
+              <DrawerContent>
+                <DrawerHeader><DrawerTitle>Select Account</DrawerTitle></DrawerHeader>
+                <div className="p-4 space-y-2 max-h-[50vh] overflow-y-auto">
+                  {accounts.map((account) => (
+                    <Button key={account.id} type="button" variant="ghost" className="w-full justify-start flex flex-col items-start h-auto py-2" onClick={() => {
+                      setValue("accountId", account.id);
+                      setAccountDrawerOpen(false);
+                    }}>
+                      <span className="font-medium">{account.name}</span>
+                      <span className="text-xs text-muted-foreground">₹{parseFloat(account.balance).toFixed(2)}</span>
+                    </Button>
+                  ))}
+                  <CreateAccountDrawer>
+                    <Button type="button" variant="outline" className="w-full mt-2">
+                      Create New Account
+                    </Button>
+                  </CreateAccountDrawer>
+                </div>
+              </DrawerContent>
+            </Drawer>
+          </div>
           {errors.accountId && (
             <p className="text-sm text-red-500">{errors.accountId.message}</p>
           )}
@@ -189,21 +223,45 @@ const AddTransactionForm = ({ accounts, categories, editMode = false, initialDat
       </div>
       <div className="space-y-2">
         <label className="text-sm font-medium">Category</label>
-        <Select
-          onValueChange={(value) => setValue("category", value)}
-          defaultValue={getValues("category")}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="Select category" />
-          </SelectTrigger>
-          <SelectContent>
-            {filteredCategories.map((category) => (
-              <SelectItem key={category.id} value={category.id}>
-                {category.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <div className="hidden md:block">
+          <Select
+            onValueChange={(value) => setValue("category", value)}
+            defaultValue={getValues("category")}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select category" />
+            </SelectTrigger>
+            <SelectContent>
+              {filteredCategories.map((category) => (
+                <SelectItem key={category.id} value={category.id}>
+                  {category.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="md:hidden">
+          <Drawer open={categoryDrawerOpen} onOpenChange={setCategoryDrawerOpen}>
+            <DrawerTrigger asChild>
+              <Button variant="outline" className="w-full justify-start text-left font-normal" type="button">
+                {getValues("category") ? filteredCategories.find(c => c.id === getValues("category"))?.name : "Select category"}
+              </Button>
+            </DrawerTrigger>
+            <DrawerContent>
+              <DrawerHeader><DrawerTitle>Select Category</DrawerTitle></DrawerHeader>
+              <div className="p-4 space-y-2 max-h-[50vh] overflow-y-auto">
+                {filteredCategories.map((category) => (
+                  <Button key={category.id} type="button" variant="ghost" className="w-full justify-start" onClick={() => {
+                    setValue("category", category.id);
+                    setCategoryDrawerOpen(false);
+                  }}>
+                    {category.name}
+                  </Button>
+                ))}
+              </div>
+            </DrawerContent>
+          </Drawer>
+        </div>
         {errors.category && (
           <p className="text-sm text-red-500">{errors.category.message}</p>
         )}

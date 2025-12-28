@@ -119,23 +119,28 @@ const DashboardClient = ({ accounts, transactions, budgetData, defaultAccount })
             />
 
             {/* Account List */}
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                <CreateAccountDrawer onAccountCreated={handleCreateOptimistic}>
-                    <Card className="hover:shadow-md transition-shadow cursor-pointer border-dashed">
-                        <CardContent className="flex flex-col items-center justify-center text-muted-foreground h-full pt-5">
-                            <Plus className="h-10 w-10 mb-2" />
-                            <p className="text-sm font-medium">Add New Account</p>
-                        </CardContent>
-                    </Card>
-                </CreateAccountDrawer>
+            <div className="flex overflow-x-auto gap-4 md:grid md:grid-cols-2 lg:grid-cols-3 pb-4 -mx-4 px-4 scroll-smooth snap-x">
+                <div className="min-w-[85vw] md:min-w-0 snap-center">
+                    <CreateAccountDrawer onAccountCreated={handleCreateOptimistic}>
+                        <Card className="hover:shadow-md transition-shadow cursor-pointer border-dashed h-full">
+                            <CardContent className="flex flex-col items-center justify-center text-muted-foreground h-full pt-5">
+                                <Plus className="h-10 w-10 mb-2" />
+                                <p className="text-sm font-medium">Add New Account</p>
+                            </CardContent>
+                        </Card>
+                    </CreateAccountDrawer>
+                </div>
 
                 {filteredAccounts.length > 0 &&
                     filteredAccounts.map((account) => {
-                        return <AccountCard
-                            key={account.id}
-                            account={account}
-                            onDefaultChange={handleDefaultOptimistic}
-                        />;
+                        return (
+                            <div key={account.id} className="min-w-[85vw] md:min-w-0 snap-center">
+                                <AccountCard
+                                    account={account}
+                                    onDefaultChange={handleDefaultOptimistic}
+                                />
+                            </div>
+                        );
                     })}
             </div>
         </div>

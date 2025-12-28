@@ -141,3 +141,32 @@
     position: relative;
     transform: translateY(120%);
 }
+
+#word-1 h1,
+#word-2 h1,
+.count .digit h1 {
+    will-change: transform;
+}
+
+/* Responsive Text Scaling for Mobile - "Liquid Fill" adaptation using vw */
+@media (max-width: 768px) {
+    .word h1 {
+        font-size: 18vw;
+        /* Resize based on viewport width */
+    }
+
+    .count .digit h1 {
+        font-size: 35vw;
+        height: 35vw;
+        /* Match container height to font size approx */
+    }
+
+    .digit {
+        height: 38vw;
+        padding-top: 0;
+    }
+
+    .spinner {
+        will-change: transform, opacity;
+    }
+}

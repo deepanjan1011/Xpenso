@@ -73,75 +73,6 @@ const DashboardOverview = ({ accounts, transactions, currentTab }) => {
 
   return (
     <div className="grid gap-4 md:grid-cols-2">
-      {/* ... (Recent Transactions Card kept same) ... */}
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-          <CardTitle className="text-base font-normal">
-            Recent Transactions
-          </CardTitle>
-          {selectedCategory && (
-            <Badge variant="outline" className="cursor-pointer" onClick={() => setSelectedCategory(null)}>
-              Filter: {selectedCategory} <span className="ml-1 text-xs">x</span>
-            </Badge>
-          )}
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {recentTransactions.length === 0 ? (
-              <p className="text-center text-muted-foreground py-4">
-                No recent transactions
-              </p>
-            ) : (
-              recentTransactions.map((transaction) => (
-                <div
-                  key={transaction.id}
-                  className="flex items-center justify-between"
-                >
-                  <div className="space-y-1">
-                    <p className="text-sm font-medium leading-none">
-                      {transaction.description || "Untitled Transaction"}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      {format(new Date(transaction.date), "PP")}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    {transaction.account && currentTab === "all" && (
-                      <Badge
-                        variant="outline"
-                        className={cn(
-                          "text-xs font-medium",
-                          transaction.account.isBusiness
-                            ? "bg-purple-100 text-purple-700 border-purple-200"
-                            : "bg-green-100 text-green-700 border-green-200"
-                        )}
-                      >
-                        {transaction.account.isBusiness ? "Business" : "Personal"}
-                      </Badge>
-                    )}
-                    <div
-                      className={cn(
-                        "flex items-center",
-                        transaction.type === "EXPENSE"
-                          ? "text-red-500"
-                          : "text-green-500"
-                      )}
-                    >
-                      {transaction.type === "EXPENSE" ? (
-                        <ArrowDownRight className="mr-1 h-4 w-4" />
-                      ) : (
-                        <ArrowUpRight className="mr-1 h-4 w-4" />
-                      )}
-                      ₹{transaction.amount.toFixed(2)}
-                    </div>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
-        </CardContent>
-      </Card>
-
       {/* Expense Breakdown Card */}
       <Card>
         <CardHeader>
@@ -209,6 +140,65 @@ const DashboardOverview = ({ accounts, transactions, currentTab }) => {
               </ResponsiveContainer>
             </div>
           )}
+        </CardContent>
+      </Card>
+
+      {/* Recent Transactions Card */}
+      <Card>
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
+          <CardTitle className="text-base font-normal">
+            Recent Transactions
+          </CardTitle>
+          {selectedCategory && (
+            <Badge variant="outline" className="cursor-pointer" onClick={() => setSelectedCategory(null)}>
+              Filter: {selectedCategory} <span className="ml-1 text-xs">x</span>
+            </Badge>
+          )}
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {recentTransactions.length === 0 ? (
+              <p className="text-center text-muted-foreground py-4">
+                No recent transactions
+              </p>
+            ) : (
+              recentTransactions.map((transaction) => (
+                <div
+                  key={transaction.id}
+                  className="flex items-center justify-between"
+                >
+                  <div className="space-y-1">
+                    <p className="text-sm font-medium leading-none">
+                      {transaction.description || "Untitled Transaction"}
+                    </p>
+                    <p className="text-xs text-muted-foreground capitalize">
+                      {transaction.category}
+                    </p>
+                  </div>
+                  <div className="flex flex-col items-end gap-1">
+                    <div
+                      className={cn(
+                        "flex items-center",
+                        transaction.type === "EXPENSE"
+                          ? "text-red-500"
+                          : "text-green-500"
+                      )}
+                    >
+                      {transaction.type === "EXPENSE" ? (
+                        <ArrowDownRight className="mr-1 h-4 w-4" />
+                      ) : (
+                        <ArrowUpRight className="mr-1 h-4 w-4" />
+                      )}
+                      ₹{transaction.amount.toFixed(2)}
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      {format(new Date(transaction.date), "PP")}
+                    </p>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
         </CardContent>
       </Card>
     </div>
