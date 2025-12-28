@@ -1,9 +1,7 @@
 "use client"
 import React, { useRef, useLayoutEffect } from 'react'
 import gsap from 'gsap'
-// import CustomEase from "gsap/CustomEase"; // Might fail if not available
 import "./landing-loader.css"
-
 
 const LandingLoader = () => {
     const containerRef = useRef(null)
@@ -11,10 +9,6 @@ const LandingLoader = () => {
     useLayoutEffect(() => {
         // Fallback for CustomEase "hop"
         const hopEase = "power4.inOut";
-
-        // Try to register CustomEase if valid, else ignore
-        // gsap.registerPlugin(CustomEase);
-        // try { CustomEase.create("hop", "0.9, 0, 0.1, 1"); hopEase = "hop"; } catch(e) {}
 
         const ctx = gsap.context(() => {
             const tl = gsap.timeline({
@@ -34,10 +28,10 @@ const LandingLoader = () => {
                     digits,
                     {
                         y: "0%",
-                        duration: 0.75,
+                        duration: 0.9,
                         stagger: 0.05,
                     },
-                    index * 0.5 // Sequence delay
+                    index * 0.6 // Sequence delay
                 );
 
                 // Exit (y: -100%)
@@ -46,10 +40,10 @@ const LandingLoader = () => {
                         digits,
                         {
                             y: "-100%",
-                            duration: 0.75,
+                            duration: 0.9,
                             stagger: 0.05,
                         },
-                        index * 0.5 + 0.5
+                        index * 0.6 + 0.6
                     );
                 }
             });
@@ -58,11 +52,11 @@ const LandingLoader = () => {
             tl.to(".spinner", {
                 opacity: 0,
                 duration: 0.25,
-            });
+            }, "-=0.6");
 
             // 3. Logo Reveal ("<" of spinner fade?)
             tl.to(".word h1",
-                { y: "0%", duration: 0.8 },
+                { y: "0%", duration: 0.6 },
                 "<"
             );
 
@@ -71,16 +65,16 @@ const LandingLoader = () => {
                 scaleY: 1,
                 duration: 0.6,
                 onComplete: () => {
-                    gsap.to(".divider", { opacity: 0, duration: 0.25, delay: 0.15 })
+                    gsap.to(".divider", { opacity: 0, duration: 0.25, delay: 0.1 })
                 }
-            });
+            }, "-=0.5");
 
             // 5. Logo Exit (Split) - INSTANT
             tl.to("#word-1 h1", {
                 y: "100%",
                 duration: 0.4,
                 ease: "power2.in"
-            });
+            }, "-=0.2");
 
             tl.to("#word-2 h1", {
                 y: "-100%",

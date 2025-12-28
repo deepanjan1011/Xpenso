@@ -69,7 +69,7 @@ export default async function Home() {
                 size="lg"
                 className="bg-white text-emerald-600 hover:bg-emerald-50 animate-bounce"
               >
-                Start Free Trial
+                Start Now
               </Button>
             </Link>
           </div>
