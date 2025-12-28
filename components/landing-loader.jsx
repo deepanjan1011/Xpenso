@@ -34,29 +34,22 @@ const LandingLoader = () => {
                     digits,
                     {
                         y: "0%",
-                        duration: 1,
-                        stagger: 0.075,
+                        duration: 0.75,
+                        stagger: 0.05,
                     },
-                    index * 1 // Sequence delay
+                    index * 0.5 // Sequence delay
                 );
 
                 // Exit (y: -100%)
-                if (index < counts.length) { // User logic: last one stays? No, user says "if index < counts.length" -> actually usually last one stays until replaced, but here they all exit except maybe last? 
-                    // User code:
-                    // if (index < counts.length) { ... index * 1 + 1 }
-                    // Wait, if 5 items:
-                    // 0: Enter at 0. Exit at 1.
-                    // 1: Enter at 1. Exit at 2.
-                    // 4: Enter at 4. Exit at 5.
-                    // So they all exit.
+                if (index < counts.length) {
                     tl.to(
                         digits,
                         {
                             y: "-100%",
-                            duration: 1,
-                            stagger: 0.075,
+                            duration: 0.75,
+                            stagger: 0.05,
                         },
-                        index * 1 + 1
+                        index * 0.5 + 0.5
                     );
                 }
             });
@@ -64,24 +57,21 @@ const LandingLoader = () => {
             // 2. Spinner Fade
             tl.to(".spinner", {
                 opacity: 0,
-                duration: 0.3,
+                duration: 0.25,
             });
 
             // 3. Logo Reveal ("<" of spinner fade?)
-            // User: tl.to(".word h1", { y: "0%" ... }, "<")
-
             tl.to(".word h1",
-                { y: "0%", duration: 1 },
+                { y: "0%", duration: 0.8 },
                 "<"
             );
 
             // 4. Divider Scale
             tl.to(".divider", {
                 scaleY: 1,
-                duration: 0.8,
+                duration: 0.6,
                 onComplete: () => {
-                    // Inner GSAP inside onComplete? User did this. 
-                    gsap.to(".divider", { opacity: 0, duration: 0.3, delay: 0.3 })
+                    gsap.to(".divider", { opacity: 0, duration: 0.25, delay: 0.15 })
                 }
             });
 
