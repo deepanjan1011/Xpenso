@@ -10,14 +10,16 @@ const isProtectedRoute = createRouteMatcher([
 
 const aj = arcjet({
     key: process.env.ARCJET_KEY,
-    rules:[
+    rules: [
         shield({
             mode: 'LIVE'
         }),
         detectBot({
             mode: "LIVE",
-            allow:[
+            allow: [
                 "CATEGORY:SEARCH_ENGINE",
+                "CATEGORY:PREVIEW",
+                "CATEGORY:MONITOR",
                 "GO_HTTP"
             ]
         })
@@ -25,15 +27,15 @@ const aj = arcjet({
 })
 
 const clerk = clerkMiddleware(async (auth, req) => {
-    const {userId} =await auth();
+    const { userId } = await auth();
 
-    if(!userId && isProtectedRoute(req)){
+    if (!userId && isProtectedRoute(req)) {
         const { redirectToSignIn } = await auth();
         return redirectToSignIn();
     }
 });
 
-export default createMiddleware(aj,clerk);
+export default createMiddleware(aj, clerk);
 
 export const config = {
     matcher: [
