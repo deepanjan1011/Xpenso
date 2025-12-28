@@ -70,10 +70,10 @@ const DashboardClient = ({ accounts, transactions, budgetData, defaultAccount })
         <div className="space-y-8">
             {/* Power Header Context Switcher */}
             <div className="flex justify-center mb-10">
-                <div className="flex items-center bg-zinc-100 dark:bg-zinc-900/50 p-1.5 rounded-full shadow-inner border gap-1">
+                <div className="flex flex-wrap items-center justify-center bg-zinc-100 dark:bg-zinc-900/50 p-1.5 rounded-3xl md:rounded-full shadow-inner border gap-1 w-full md:w-auto">
                     <button
                         onClick={() => setActiveTab("personal")}
-                        className={`relative px-8 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 flex items-center gap-2 ${activeTab === "personal"
+                        className={`relative px-4 md:px-8 py-2 md:py-2.5 rounded-full text-xs md:text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2 flex-1 md:flex-initial ${activeTab === "personal"
                             ? "bg-emerald-500 text-white shadow-lg shadow-emerald-500/20 scale-105"
                             : "text-zinc-500 hover:text-zinc-700 hover:bg-zinc-200/50"
                             }`}
@@ -83,7 +83,7 @@ const DashboardClient = ({ accounts, transactions, budgetData, defaultAccount })
                     <div className="w-px h-6 bg-zinc-200 mx-1" />
                     <button
                         onClick={() => setActiveTab("business")}
-                        className={`relative px-8 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 flex items-center gap-2 ${activeTab === "business"
+                        className={`relative px-4 md:px-8 py-2 md:py-2.5 rounded-full text-xs md:text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2 flex-1 md:flex-initial ${activeTab === "business"
                             ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20 scale-105"
                             : "text-zinc-500 hover:text-zinc-700 hover:bg-zinc-200/50"
                             }`}
@@ -93,7 +93,7 @@ const DashboardClient = ({ accounts, transactions, budgetData, defaultAccount })
                     <div className="w-px h-6 bg-zinc-200 mx-1" />
                     <button
                         onClick={() => setActiveTab("all")}
-                        className={`relative px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${activeTab === "all"
+                        className={`relative px-4 md:px-6 py-2 md:py-2.5 rounded-full text-xs md:text-sm font-semibold transition-all duration-300 flex items-center justify-center flex-1 md:flex-initial ${activeTab === "all"
                             ? "bg-zinc-800 text-white shadow-lg scale-105"
                             : "text-zinc-500 hover:text-zinc-700 hover:bg-zinc-200/50"
                             }`}
@@ -119,28 +119,24 @@ const DashboardClient = ({ accounts, transactions, budgetData, defaultAccount })
             />
 
             {/* Account List */}
-            <div className="flex overflow-x-auto gap-4 md:grid md:grid-cols-2 lg:grid-cols-3 pb-4 -mx-4 px-4 scroll-smooth snap-x">
-                <div className="min-w-[85vw] md:min-w-0 snap-center">
-                    <CreateAccountDrawer onAccountCreated={handleCreateOptimistic}>
-                        <Card className="hover:shadow-md transition-shadow cursor-pointer border-dashed h-full">
-                            <CardContent className="flex flex-col items-center justify-center text-muted-foreground h-full pt-5">
-                                <Plus className="h-10 w-10 mb-2" />
-                                <p className="text-sm font-medium">Add New Account</p>
-                            </CardContent>
-                        </Card>
-                    </CreateAccountDrawer>
-                </div>
+            {/* Account List */}
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                <CreateAccountDrawer onAccountCreated={handleCreateOptimistic}>
+                    <Card className="hover:shadow-md transition-shadow cursor-pointer border-dashed">
+                        <CardContent className="flex flex-col items-center justify-center text-muted-foreground h-full pt-5">
+                            <Plus className="h-10 w-10 mb-2" />
+                            <p className="text-sm font-medium">Add New Account</p>
+                        </CardContent>
+                    </Card>
+                </CreateAccountDrawer>
 
                 {filteredAccounts.length > 0 &&
                     filteredAccounts.map((account) => {
-                        return (
-                            <div key={account.id} className="min-w-[85vw] md:min-w-0 snap-center">
-                                <AccountCard
-                                    account={account}
-                                    onDefaultChange={handleDefaultOptimistic}
-                                />
-                            </div>
-                        );
+                        return <AccountCard
+                            key={account.id}
+                            account={account}
+                            onDefaultChange={handleDefaultOptimistic}
+                        />;
                     })}
             </div>
         </div>

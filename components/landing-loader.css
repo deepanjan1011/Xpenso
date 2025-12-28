@@ -1,6 +1,6 @@
 /* Fonts */
 @import url("https://fonts.cdnfonts.com/css/pp-neue-montreal");
-@import url("https://fonts.cdnfonts.com/css/pp-editorial-new");
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
 
 .loader {
     position: fixed;
@@ -55,7 +55,7 @@
     font-weight: 500;
     line-height: 1;
     color: #fff;
-    font-family: "PP Editorial New", sans-serif;
+    font-family: "Instrument Serif", serif;
     transform: translateY(120%);
     /* Hidden state */
 }

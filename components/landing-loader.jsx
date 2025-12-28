@@ -90,10 +90,13 @@ const LandingLoader = () => {
                 ease: "expo.inOut",
                 onStart: () => {
                     // Page Scale In - SNAP
-                    gsap.fromTo("#main-content",
-                        { scale: 1.1, filter: "blur(10px)" },
-                        { scale: 1, filter: "blur(0px)", duration: 0.8, ease: "power2.out" }
-                    );
+                    const mainContent = document.getElementById("main-content");
+                    if (mainContent) {
+                        gsap.fromTo(mainContent,
+                            { scale: 1.1, filter: "blur(10px)" },
+                            { scale: 1, filter: "blur(0px)", duration: 0.8, ease: "power2.out" }
+                        );
+                    }
                 }
             }, "<"); // Start exactly when logo starts exiting
 

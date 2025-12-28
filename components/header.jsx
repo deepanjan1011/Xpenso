@@ -12,8 +12,8 @@ const header = async () => {
     return (
         <>
             <div className='fixed top-0 w-full bg-white/50 backdrop-blur-md z-[100] border-b border-gray-200 supports-[backdrop-filter]:bg-white/40'>
-                <nav className='container mx-auto px-4 py-2 flex items-center justify-between'>
-                    <Link href="/">
+                <nav className='container mx-auto px-4 py-2 flex items-center justify-end md:justify-between relative min-h-[60px]'>
+                    <Link href="/" className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 md:static md:transform-none">
                         <Logo />
                     </Link>
                     <div className="flex items-center space-x-4">
@@ -34,6 +34,13 @@ const header = async () => {
                                         <span className="hidden md:inline">Add Transaction</span>
                                     </Button>
                                 </Link>
+                                <UserButton
+                                    appearance={{
+                                        elements: {
+                                            avatarBox: "w-10 h-10",
+                                        },
+                                    }}
+                                />
                             </div>
                         </SignedIn>
                         <SignedOut>
@@ -41,15 +48,7 @@ const header = async () => {
                                 <Button variant="outline" className="border-emerald-500 text-emerald-600 hover:bg-emerald-50 hover:text-emerald-700">Login</Button>
                             </SignInButton >
                         </SignedOut>
-                        <SignedIn>
-                            <UserButton
-                                appearance={{
-                                    elements: {
-                                        avatarBox: "w-10 h-10",
-                                    },
-                                }}
-                            />
-                        </SignedIn>
+
                     </div>
                 </nav>
             </div>
